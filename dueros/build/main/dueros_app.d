@@ -148,11 +148,12 @@ dueros_app.o: \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/filter_resample.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/processing/esp_resample.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_stream/include/fatfs_stream.h \
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_stream/include/http_stream.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/amr_decoder.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/amrwb_encoder.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/mp3_decoder.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/wav_decoder.h \
- D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_stream/include/http_stream.h \
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/aac_decoder.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/wifi_service/include/wifi_service.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/wifi_service/include/esp_wifi_setting.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/esp32/include/esp_wifi_types.h \
@@ -460,6 +461,8 @@ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/incl
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_stream/include/fatfs_stream.h:
 
+D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_stream/include/http_stream.h:
+
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/amr_decoder.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/amrwb_encoder.h:
@@ -468,7 +471,7 @@ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/incl
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/wav_decoder.h:
 
-D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_stream/include/http_stream.h:
+D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/aac_decoder.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/wifi_service/include/wifi_service.h:
 

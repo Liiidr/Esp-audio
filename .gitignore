@@ -1,0 +1,4 @@
+
+*.a
+dueros/build/include/config/mca/trace/level/warning.h
+dueros/build/
