@@ -103,10 +103,10 @@ duer_audio_wrapper.o: \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/log/include/esp_log.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/log/include/esp_log_internal.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_sal/include/audio_mem.h \
- D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board.h \
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_hal/include/audio_hal.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_sal/include/audio_error.h \
- D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board_def.h \
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board_def.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/include/board_pins_config.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/driver/include/driver/i2c.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h \
@@ -143,6 +143,7 @@ duer_audio_wrapper.o: \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/wav_encoder.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/mp3_decoder.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/aac_decoder.h \
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/amr_decoder.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_stream/include/http_stream.h
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/freertos/include/freertos/FreeRTOS.h:
@@ -351,13 +352,13 @@ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/log/include/esp_log
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_sal/include/audio_mem.h:
 
-D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board.h:
+D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_hal/include/audio_hal.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_sal/include/audio_error.h:
 
-D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board_def.h:
+D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board_def.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/include/board_pins_config.h:
 
@@ -430,6 +431,8 @@ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/incl
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/mp3_decoder.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/aac_decoder.h:
+
+D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/amr_decoder.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_stream/include/http_stream.h:
 /home/zz/esp/Esp-audio/dueros/main/./duer_audio_wrapper.c:

@@ -84,14 +84,14 @@ static QueueHandle_t Queue_vad_play = NULL;
 #define QUEUE_PLAY 2
 
 
-static audio_element_handle_t i2s_stream_writer,fatfs_stream_reader,http_stream_reader,resample_for_play;
-static audio_element_handle_t fatfs_vad_writer,fatfs_vad_reader;
-static audio_pipeline_handle_t pipeline_play,pipeline_encode;
+//static audio_element_handle_t i2s_stream_writer,fatfs_stream_reader,http_stream_reader,resample_for_play;
+//static audio_element_handle_t fatfs_vad_writer,fatfs_vad_reader;
+//static audio_pipeline_handle_t pipeline_play,pipeline_encode;
 
 #define PIPELINE_PLAY 0
 
-#define	AMR_STREAM_URI "http://118.190.93.145:8027/upload/b/a/4/0/ba4029ef57944772e9508040a1394bf3.aac"
-//#define AMR_STREAM_URI "http://118.190.93.145:8027/upload/d/f/8/c/df8cb45e18b0e3bf933dcaef371739f9.amr"
+//#define	AMR_STREAM_URI "http://118.190.93.145:8027/upload/b/a/4/0/ba4029ef57944772e9508040a1394bf3.aac"
+#define AMR_STREAM_URI "http://118.190.93.145:8027/upload/d/f/8/c/df8cb45e18b0e3bf933dcaef371739f9.amr"
 //#define AMR_STREAM_URI "http://118.190.93.145:8027/upload/2/e/d/3/2ed3bca13328da669bd1e9d74e92c382.mp3" 
 //#define AMR_STREAM_URI "file://sdcard/4800.wav"
 //#define AMR_STREAM_URI "file://spiffs/test1.raw"
@@ -196,13 +196,14 @@ static void vad_task(void * pram)
 		switch(r_queue){
 			case QUEUE_VAD:
 				printf("QUEUE_VAD\r\n");
-				file = fopen("/sdcard/test1.raw", "w+");					
+				//file = fopen("/sdcard/test1.raw", "w+");	
+				file = fopen("/spiffs/test.raw", "w+");
 				if (NULL == file) {
 					ESP_LOGW(TAG, "open test1.raw failed,[%d]", __LINE__);
 				}		
 				while(1){
 					int ret = rec_engine_data_read(voiceData, REC_ONE_BLOCK_SIZE, 110 / portTICK_PERIOD_MS);
-					ESP_LOGD(TAG, "index = %d", ret);
+					ESP_LOGE(TAG, "index = %d", ret);
 					if ((ret == 0) || (ret == -1)) {
 						fclose(file);
 						printf("fclose\r\n");
@@ -467,8 +468,17 @@ void duer_app_init(void)
         vTaskDelay(100 / portTICK_PERIOD_MS);
     }
 
+    periph_wifi_cfg_t wifi_cfg = {
+        .ssid = CONFIG_WIFI_SSID,
+        .password = CONFIG_WIFI_PASSWORD,
+    };
+    esp_periph_handle_t wifi_handle = periph_wifi_init(&wifi_cfg);
+    esp_periph_start(set, wifi_handle);
+    //periph_wifi_wait_for_connected(wifi_handle, portMAX_DELAY);
 
 
+
+/*
 	wifi_config_t sta_cfg = {0};
 	strncpy((char *)&sta_cfg.sta.ssid, CONFIG_WIFI_SSID, strlen(CONFIG_WIFI_SSID));
 	strncpy((char *)&sta_cfg.sta.password, CONFIG_WIFI_PASSWORD, strlen(CONFIG_WIFI_PASSWORD));
@@ -495,6 +505,7 @@ void duer_app_init(void)
 	wifi_service_register_setting_handle(wifi_serv, h, &reg_idx);
 	wifi_service_set_sta_info(wifi_serv, &sta_cfg);
 	wifi_service_connect(wifi_serv);
+*/
 
     rec_config_t eng = DEFAULT_REC_ENGINE_CONFIG();
     eng.vad_off_delay_ms = 800;

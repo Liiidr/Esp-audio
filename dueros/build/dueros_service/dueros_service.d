@@ -110,10 +110,10 @@ dueros_service.o: \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/clouds/dueros/lightduer/include/lightduer_coap_defs.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/clouds/dueros/lightduer/include/lightduer_net_transport.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/clouds/dueros/lightduer/include/lightduer_dcs.h \
- D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board.h \
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_hal/include/audio_hal.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_sal/include/audio_error.h \
- D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board_def.h \
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board_def.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/include/board_pins_config.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/driver/include/driver/i2c.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h \
@@ -377,13 +377,13 @@ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/clouds/dueros/lightduer/inc
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/clouds/dueros/lightduer/include/lightduer_dcs.h:
 
-D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board.h:
+D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_hal/include/audio_hal.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_sal/include/audio_error.h:
 
-D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board_def.h:
+D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board_def.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/include/board_pins_config.h:
 

@@ -95,8 +95,8 @@ driver/zl38063/zl38063.o: \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_hal/driver/zl38063/api_lib/vproc_common.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_hal/driver/zl38063/api_lib/vproc_data_types.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_hal/driver/zl38063/example_apps/tw_spi_access.h \
- D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board.h \
- D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board_def.h \
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board.h \
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board_def.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/include/board_pins_config.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/driver/include/driver/i2s.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/soc/esp32/include/soc/i2s_struct.h \
@@ -318,9 +318,9 @@ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_hal/driver/zl38063/ap
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_hal/driver/zl38063/example_apps/tw_spi_access.h:
 
-D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board.h:
+D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board.h:
 
-D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board_def.h:
+D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board_def.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/include/board_pins_config.h:
 
