@@ -95,9 +95,9 @@ dueros_app.o: \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp_peripherals/include/periph_wifi.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp_peripherals/include/esp_peripherals.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp_peripherals/include/periph_button.h \
- D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board.h \
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_hal/include/audio_hal.h \
- D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board_def.h \
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board_def.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/include/board_pins_config.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/driver/include/driver/i2c.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h \
@@ -154,6 +154,7 @@ dueros_app.o: \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/mp3_decoder.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/wav_decoder.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/aac_decoder.h \
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_pipeline/include/ringbuf.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/wifi_service/include/wifi_service.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/wifi_service/include/esp_wifi_setting.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/esp32/include/esp_wifi_types.h \
@@ -163,7 +164,8 @@ dueros_app.o: \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/wifi_service/include/smart_config.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/esp32/include/esp_smartconfig.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp_peripherals/include/periph_adc_button.h \
- D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp_peripherals/lib/adc_button/adc_button.h
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp_peripherals/lib/adc_button/adc_button.h \
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp_peripherals/include/periph_spiffs.h
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/newlib/include/string.h:
 
@@ -355,11 +357,11 @@ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp_peripherals/include/esp
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp_peripherals/include/periph_button.h:
 
-D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board.h:
+D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_hal/include/audio_hal.h:
 
-D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board_def.h:
+D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board_def.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/include/board_pins_config.h:
 
@@ -473,6 +475,8 @@ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/incl
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp-adf-libs/esp_codec/include/codec/aac_decoder.h:
 
+D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_pipeline/include/ringbuf.h:
+
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/wifi_service/include/wifi_service.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/wifi_service/include/esp_wifi_setting.h:
@@ -492,4 +496,6 @@ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/esp32/include/esp_s
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp_peripherals/include/periph_adc_button.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp_peripherals/lib/adc_button/adc_button.h:
+
+D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp_peripherals/include/periph_spiffs.h:
 /home/zz/esp/Esp-audio/dueros/main/./dueros_app.c:

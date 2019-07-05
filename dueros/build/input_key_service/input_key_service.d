@@ -96,11 +96,11 @@ input_key_service.o: \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/esp_dispatcher/include/periph_service.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/freertos/include/freertos/task.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/input_key_service/include/input_key_com_user_id.h \
- D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board.h \
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_hal/include/audio_hal.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/freertos/include/freertos/semphr.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/freertos/include/freertos/queue.h \
- D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board_def.h \
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board_def.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/include/board_pins_config.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/driver/include/driver/i2c.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h \
@@ -318,7 +318,7 @@ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/freertos/include/fr
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/input_key_service/include/input_key_com_user_id.h:
 
-D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board.h:
+D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_hal/include/audio_hal.h:
 
@@ -326,7 +326,7 @@ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/freertos/include/fr
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/freertos/include/freertos/queue.h:
 
-D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_msc_v2_2/board_def.h:
+D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/lyratd_mini_v1_1/board_def.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/components/audio_board/include/board_pins_config.h:
 

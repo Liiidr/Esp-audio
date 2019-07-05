@@ -2,3 +2,4 @@
 *.a
 dueros/build/include/config/mca/trace/level/warning.h
 dueros/build/
+dueros/build/adf_utils/cloud_services/aws_sig_v4_signing.d

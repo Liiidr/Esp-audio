@@ -58,13 +58,15 @@
 #include "mp3_decoder.h"
 #include "wav_decoder.h"
 #include "aac_decoder.h"
+#include "ringbuf.h"
 
 #include "display_service.h"
 #include "wifi_service.h"
 #include "airkiss_config.h"
 #include "smart_config.h"
 #include "periph_adc_button.h"
-//#include "smartconfig.h"
+
+#include "periph_spiffs.h"
 
 
 static const char *TAG              = "DUEROS";
@@ -75,126 +77,81 @@ static display_service_handle_t disp_serv = NULL;
 static periph_service_handle_t wifi_serv = NULL;
 static bool wifi_setting_flag;
 static char flag_test = 0;
+static QueueHandle_t Queue_vad_play = NULL;
+#define QUEUE_VAD_PLAY_LEN	2
+#define QUEUE_VAD_PLAY_SIZE	1
+#define QUEUE_VAD 1
+#define QUEUE_PLAY 2
 
-//SemaphoreHandle_t xSemaphore_play = NULL;
-SemaphoreHandle_t xSemaphore_vad = NULL;
-static audio_element_handle_t i2s_stream_writer,fatfs_stream_reader,http_stream_reader,amr_decoder,mp3_decoder,wav_decoder,aac_decoder,resample_for_play;
+
+static audio_element_handle_t i2s_stream_writer,fatfs_stream_reader,http_stream_reader,resample_for_play;
 static audio_element_handle_t fatfs_vad_writer,fatfs_vad_reader;
 static audio_pipeline_handle_t pipeline_play,pipeline_encode;
 
+#define PIPELINE_PLAY 0
 
+#define	AMR_STREAM_URI "http://118.190.93.145:8027/upload/b/a/4/0/ba4029ef57944772e9508040a1394bf3.aac"
+//#define AMR_STREAM_URI "http://118.190.93.145:8027/upload/d/f/8/c/df8cb45e18b0e3bf933dcaef371739f9.amr"
+//#define AMR_STREAM_URI "http://118.190.93.145:8027/upload/2/e/d/3/2ed3bca13328da669bd1e9d74e92c382.mp3" 
+//#define AMR_STREAM_URI "file://sdcard/4800.wav"
+//#define AMR_STREAM_URI "file://spiffs/test1.raw"
 
-#define AAC_STREAM_URI "http://118.190.93.145:8027/upload/9/4/5/4/94546ccbe2820d1aeeab7a8300563f3d.aac"
+static int esp32_playback_voice(const char *url);
+
 
 void rec_engine_cb(rec_event_type_t type, void *user_data)
 {
-
-
+	BaseType_t xReturn = pdFAIL;
+	uint32_t senddata1 = QUEUE_VAD; 
     if (REC_EVENT_WAKEUP_START == type) {
         ESP_LOGI(TAG, "rec_engine_cb - REC_EVENT_WAKEUP_START");
-		//rec = rec_engine_enc_enable(true);
-		//printf("rec = %d \r\n",rec);
+
+		static char buf[1024];
+		vTaskGetRunTimeStats(buf);
+		printf("Run Time Stats:\nTask Name	  Time	  Percent\n%s\n", buf);
+
+		vTaskList(buf);
+		printf("Task List:\nTask Name	 Status   Prio	  HWM	 Task Number\n%s\n", buf);
+
 
     } else if (REC_EVENT_VAD_START == type) {
         ESP_LOGI(TAG, "rec_engine_cb - REC_EVENT_VAD_START");
-		flag_test = 1;
-		xSemaphoreGive( xSemaphore_vad);
+
+		xReturn = xQueueSend(Queue_vad_play, &senddata1, 0);
+		if(pdPASS == xReturn)printf("QUEUE_VAD sended successful\r\n");
+
 
     } else if (REC_EVENT_VAD_STOP == type) {
-
         ESP_LOGI(TAG, "rec_engine_cb - REC_EVENT_VAD_STOP");
+		
     } else if (REC_EVENT_WAKEUP_END == type) {
         ESP_LOGI(TAG, "rec_engine_cb - REC_EVENT_WAKEUP_END");
-		flag_test = 2;
-		xSemaphoreGive( xSemaphore_vad);
-		//rec_engine_enc_enable(false);
-
 		
+		esp32_playback_voice(AMR_STREAM_URI);
+
 		
     } else {
 		ESP_LOGI(TAG, "ELSE...");
     }
 }
 
-static int _http_stream_event_handle(http_stream_event_msg_t *msg)
-{
-    if (msg->event_id == HTTP_STREAM_RESOLVE_ALL_TRACKS) {
-        return ESP_OK;
-    }
 
-    if (msg->event_id == HTTP_STREAM_FINISH_TRACK) {
-        return http_stream_next_track(msg->el);
-    }
-    if (msg->event_id == HTTP_STREAM_FINISH_PLAYLIST) {
-        return http_stream_restart(msg->el);
-    }
-    return ESP_OK;
+int esp32_playback_voice(const char *url)
+{
+	int ret;
+	BaseType_t xReturn = pdFAIL;
+	uint32_t senddata2 = QUEUE_PLAY; 
+	ret = duer_dcs_speak_handler(url);
+	printf("ret =  %d\r\n",ret);
+	if(ret == ESP_ERR_AUDIO_NO_ERROR){
+		xReturn = xQueueSend(Queue_vad_play, &senddata2, 0);
+		if(pdPASS == xReturn)printf("QUEUE_PLAY sended successful\r\n");
+	}
+
+	return ret;
 }
 
-static audio_pipeline_handle_t create_play_pipeline()
-{
-	audio_pipeline_handle_t pipeline;
-	audio_pipeline_cfg_t pipeline_cfg = DEFAULT_AUDIO_PIPELINE_CONFIG();
-	pipeline = audio_pipeline_init(&pipeline_cfg);
-	mem_assert(pipeline);
-	
-    i2s_stream_cfg_t i2s_cfg = I2S_STREAM_CFG_DEFAULT();
-    i2s_cfg.i2s_config.use_apll = 0;
-    i2s_cfg.i2s_config.sample_rate = 48000;	
-    i2s_cfg.i2s_config.channel_format = I2S_CHANNEL_FMT_ONLY_LEFT;
-    i2s_cfg.type = AUDIO_STREAM_WRITER;
-    i2s_stream_writer = i2s_stream_init(&i2s_cfg);
-	
-    fatfs_stream_cfg_t fatfs_cfg = FATFS_STREAM_CFG_DEFAULT();
-    fatfs_cfg.type = AUDIO_STREAM_READER;
-    fatfs_stream_reader = fatfs_stream_init(&fatfs_cfg);
-
-	http_stream_cfg_t http_cfg = HTTP_STREAM_CFG_DEFAULT();
-    http_cfg.event_handle = _http_stream_event_handle;
-    http_cfg.type = AUDIO_STREAM_READER;
-    http_cfg.enable_playlist_parser = true;
-    http_stream_reader = http_stream_init(&http_cfg);
-
-	rsp_filter_cfg_t rsp_cfg = DEFAULT_RESAMPLE_FILTER_CONFIG();
-	rsp_cfg.src_rate = 16000;
-	rsp_cfg.src_ch = 1;
-	rsp_cfg.dest_rate = 48000;
-	rsp_cfg.dest_ch = 2;
-	rsp_cfg.type = AUDIO_CODEC_TYPE_ENCODER;
-	resample_for_play = rsp_filter_init(&rsp_cfg);
-
-	wav_decoder_cfg_t wav_cfg = DEFAULT_WAV_DECODER_CONFIG();
-	wav_cfg.task_core = 1;
-    wav_decoder = wav_decoder_init(&wav_cfg);
-	amr_decoder_cfg_t amr_cfg = DEFAULT_AMR_DECODER_CONFIG();
-	amr_cfg.task_core = 1;
-    amr_decoder = amr_decoder_init(&amr_cfg);
-	aac_decoder_cfg_t aac_cfg = DEFAULT_AAC_DECODER_CONFIG();
-	aac_cfg.task_core = 1;
-    aac_decoder = aac_decoder_init(&aac_cfg);
-	
-    audio_pipeline_register(pipeline, i2s_stream_writer, "i2s_writer");
-    audio_pipeline_register(pipeline, fatfs_stream_reader, "fatfs_reader");	
-	audio_pipeline_register(pipeline, http_stream_reader, "http");	
-	audio_pipeline_register(pipeline, resample_for_play, "filter");
-	audio_pipeline_register(pipeline, wav_decoder, "wav_de");
-	audio_pipeline_register(pipeline, amr_decoder, "amr_de");
-	audio_pipeline_register(pipeline, aac_decoder, "aac_de");	
-
-	//audio_pipeline_link(pipeline, (const char *[]) {"fatfs_reader", "filter","i2s_writer"}, 3);
-	audio_pipeline_link(pipeline, (const char *[]) {"fatfs_reader", "wav_de","i2s_writer"}, 3);
-	//audio_pipeline_link(pipeline, (const char *[]) {"http", "amr_de","filter","i2s_writer"}, 4);
-	//audio_pipeline_link(pipeline, (const char *[]) {"http", "aac_de","i2s_writer"}, 3);
-
-	//audio_element_set_uri(fatfs_stream_reader, "/sdcard/test1.raw");
-	audio_element_set_uri(fatfs_stream_reader, "/sdcard/4800.wav");
-	//audio_element_set_uri(http_stream_reader, AAC_STREAM_URI);
-
-	return pipeline;
-
-}
-
-
+/*
 static audio_pipeline_handle_t create_vad_pipeline()
 {
     audio_pipeline_handle_t pipeline;
@@ -223,60 +180,55 @@ static audio_pipeline_handle_t create_vad_pipeline()
 
 	return pipeline;
 }
-
+*/
 static void vad_task(void * pram)
 {
+	BaseType_t xReturn = pdPASS;
+	uint32_t r_queue = 0;	
 
 	uint8_t *voiceData = audio_calloc(1, REC_ONE_BLOCK_SIZE);
 	if (NULL == voiceData) {
         ESP_LOGE(TAG, "Func:%s, Line:%d, Malloc failed", __func__, __LINE__);
     }
 	FILE *file = NULL;
-
 	while(1){
-		if(xSemaphoreTake( xSemaphore_vad, portMAX_DELAY ) == pdTRUE){	
-
-			switch(flag_test){
-				case 1:
-					printf("play_task  switch flag_test = 1\r\n");
-
-					file = fopen("/sdcard/test1.raw", "w+");					
-					if (NULL == file) {
-						ESP_LOGW(TAG, "open test1.raw failed,[%d]", __LINE__);
-					}		
-					while(1){
-						int ret = rec_engine_data_read(voiceData, REC_ONE_BLOCK_SIZE, 110 / portTICK_PERIOD_MS);
-						ESP_LOGD(TAG, "index = %d", ret);
-						if ((ret == 0) || (ret == -1)) {
-							fclose(file);
-							printf("fclose		\r\n");
-							break;
-						}
-						if (file) {
-							fwrite(voiceData, 1, REC_ONE_BLOCK_SIZE, file);
-						}	
+		xReturn = xQueueReceive(Queue_vad_play, &r_queue, portMAX_DELAY);
+		switch(r_queue){
+			case QUEUE_VAD:
+				printf("QUEUE_VAD\r\n");
+				file = fopen("/sdcard/test1.raw", "w+");					
+				if (NULL == file) {
+					ESP_LOGW(TAG, "open test1.raw failed,[%d]", __LINE__);
+				}		
+				while(1){
+					int ret = rec_engine_data_read(voiceData, REC_ONE_BLOCK_SIZE, 110 / portTICK_PERIOD_MS);
+					ESP_LOGD(TAG, "index = %d", ret);
+					if ((ret == 0) || (ret == -1)) {
+						fclose(file);
+						printf("fclose\r\n");
+						
+						
+						break;
+					}
+					if (file) {
+						fwrite(voiceData, 1, REC_ONE_BLOCK_SIZE, file);
 					}	
-					flag_test = 2;
-					break;	
-				case 2:
-					printf("play_task  switch flag_test = 2\r\n");
-					flag_test = 0;					
+				}		
+				break;	
+			case QUEUE_PLAY:
+				
+				printf("QUEUE_PLAY\r\n");
+						
+			
+				break;	
+			default :
+				break;
 
-					audio_pipeline_run(pipeline_encode);
-					
 
-					break;	
-
-				default :
-					break;	
-			}
 		}
-
 	}
 	free(voiceData);
 	voiceData = NULL;
-	
-
 }
 
 
@@ -374,6 +326,7 @@ static esp_err_t wifi_service_cb(periph_service_handle_t handle, periph_service_
              evt->type, evt->source, evt->data, evt->len, ctx);
     if (evt->type == WIFI_SERV_EVENT_CONNECTED) {
         ESP_LOGI(TAG, "PERIPH_WIFI_CONNECTED [%d]", __LINE__);
+
 
         wifi_setting_flag = false;
     } else if (evt->type == WIFI_SERV_EVENT_DISCONNECTED) {
@@ -495,42 +448,54 @@ void duer_app_init(void)
         esp_periph_set_register_callback(set, periph_callback, NULL);
     }
 
-    audio_board_sdcard_init(set);
-	
+    //audio_board_sdcard_init(set);
+
+// Initialize Spiffs peripheral
+    periph_spiffs_cfg_t spiffs_cfg = {
+        .root = "/spiffs",
+        .partition_label = NULL,
+        .max_files = 5,
+        .format_if_mount_failed = true
+    };
+    esp_periph_handle_t spiffs_handle = periph_spiffs_init(&spiffs_cfg);
+
+    // Start spiffs & button peripheral
+    esp_periph_start(set, spiffs_handle);
+
+    // Wait until spiffs is mounted
+    while (!periph_spiffs_is_mounted(spiffs_handle)) {
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+    }
 
 
-		wifi_config_t sta_cfg = {0};
-		strncpy((char *)&sta_cfg.sta.ssid, CONFIG_WIFI_SSID, strlen(CONFIG_WIFI_SSID));
-		strncpy((char *)&sta_cfg.sta.password, CONFIG_WIFI_PASSWORD, strlen(CONFIG_WIFI_PASSWORD));
-	
-		wifi_service_config_t cfg = WIFI_SERVICE_DEFAULT_CONFIG();
-		cfg.evt_cb = wifi_service_cb;
-		cfg.cb_ctx = NULL;
-		cfg.setting_timeout_s = 60;
-		wifi_serv = wifi_service_create(&cfg);
-	
-		int reg_idx = 0;
-		esp_wifi_setting_handle_t h = NULL;
+
+	wifi_config_t sta_cfg = {0};
+	strncpy((char *)&sta_cfg.sta.ssid, CONFIG_WIFI_SSID, strlen(CONFIG_WIFI_SSID));
+	strncpy((char *)&sta_cfg.sta.password, CONFIG_WIFI_PASSWORD, strlen(CONFIG_WIFI_PASSWORD));
+
+	wifi_service_config_t cfg = WIFI_SERVICE_DEFAULT_CONFIG();
+	cfg.evt_cb = wifi_service_cb;
+	cfg.cb_ctx = NULL;
+	cfg.setting_timeout_s = 60;
+	wifi_serv = wifi_service_create(&cfg);
+
+	int reg_idx = 0;
+	esp_wifi_setting_handle_t h = NULL;
 #ifdef CONFIG_AIRKISS_ENCRYPT
-		airkiss_config_info_t air_info = AIRKISS_CONFIG_INFO_DEFAULT();
-		air_info.lan_pack.appid = CONFIG_AIRKISS_APPID;
-		air_info.lan_pack.deviceid = CONFIG_AIRKISS_DEVICEID;
-		air_info.aes_key = CONFIG_DUER_AIRKISS_KEY;
-		h = airkiss_config_create(&air_info);
+	airkiss_config_info_t air_info = AIRKISS_CONFIG_INFO_DEFAULT();
+	air_info.lan_pack.appid = CONFIG_AIRKISS_APPID;
+	air_info.lan_pack.deviceid = CONFIG_AIRKISS_DEVICEID;
+	air_info.aes_key = CONFIG_DUER_AIRKISS_KEY;
+	h = airkiss_config_create(&air_info);
 #elif (defined CONFIG_ESP_SMARTCONFIG)
-		smart_config_info_t info = SMART_CONFIG_INFO_DEFAULT();
-		h = smart_config_create(&info);
+	smart_config_info_t info = SMART_CONFIG_INFO_DEFAULT();
+	h = smart_config_create(&info);
 #endif
-		esp_wifi_setting_regitster_notify_handle(h, (void *)wifi_serv);
-		wifi_service_register_setting_handle(wifi_serv, h, &reg_idx);
-		wifi_service_set_sta_info(wifi_serv, &sta_cfg);
-		wifi_service_connect(wifi_serv);
+	esp_wifi_setting_regitster_notify_handle(h, (void *)wifi_serv);
+	wifi_service_register_setting_handle(wifi_serv, h, &reg_idx);
+	wifi_service_set_sta_info(wifi_serv, &sta_cfg);
+	wifi_service_connect(wifi_serv);
 
-
-
-	pipeline_play = create_play_pipeline();
-	pipeline_encode = create_vad_pipeline();
-   	
     rec_config_t eng = DEFAULT_REC_ENGINE_CONFIG();
     eng.vad_off_delay_ms = 800;
     eng.wakeup_time_ms = 5 * 1000;
@@ -547,14 +512,13 @@ void duer_app_init(void)
     eng.user_data = NULL;
 	rec_engine_create(&eng);
 
-	//audio_pipeline_run(pipeline_play);
+	Queue_vad_play = xQueueCreate(QUEUE_VAD_PLAY_LEN, QUEUE_VAD_PLAY_SIZE);
+	if(NULL != Queue_vad_play){
+		printf("Queue_vad_play created successful\r\n");
+	}
 	
-	//xSemaphore_play = xSemaphoreCreateBinary();	
-	xSemaphore_vad = xSemaphoreCreateBinary();	
-
-	//xTaskCreate(play_task, "play_task", 4096, NULL, 2,NULL);
 	xTaskCreate(vad_task, "vad_task", 4096, NULL, 3,NULL);
 
-	//initialise_wifi();
+	duer_audio_wrapper_init();
 
 }

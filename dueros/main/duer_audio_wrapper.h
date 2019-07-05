@@ -115,4 +115,8 @@ void duer_audio_wrapper_pause();
  */
 int duer_audio_wrapper_get_state();
 
+
+
+
+
 #endif //
