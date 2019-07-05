@@ -46,6 +46,7 @@
 #include "wav_encoder.h"
 #include "mp3_decoder.h"
 #include "aac_decoder.h"
+#include "amr_decoder.h"
 #include "http_stream.h"
 
 static SemaphoreHandle_t s_mutex;
@@ -67,17 +68,17 @@ static void esp_audio_state_task (void *para)
             || (esp_state.status == AUDIO_STATUS_ERROR)) {
             if (duer_playing_type == DUER_AUDIO_TYPE_SPEECH) {
                 duer_playing_type = DUER_AUDIO_TYPE_UNKOWN;
-                duer_dcs_speech_on_finished();
+                
 
                 ESP_LOGE(TAG, "duer_dcs_speech_on_finished,%d", duer_playing_type);
             } else if ((duer_playing_type == DUER_AUDIO_TYPE_MUSIC) && (player_pause == 0)) {
-                // duer_playing_type = 0;
-                duer_dcs_audio_on_finished();
+
+			
                 ESP_LOGE(TAG, "duer_dcs_audio_on_finished, %d", duer_playing_type);
-            }
+			}
         }
     }
-    vTaskDelete(NULL);
+    vTaskDelete(NULL);  
 }
 
 int _http_stream_event_handle(http_stream_event_msg_t *msg)
@@ -138,9 +139,12 @@ static void setup_player(void)
     mp3_dec_cfg.task_core = 1;
     aac_decoder_cfg_t aac_cfg = DEFAULT_AAC_DECODER_CONFIG();
     aac_cfg.task_core = 1;
+	amr_decoder_cfg_t amr_cfg = DEFAULT_AMR_DECODER_CONFIG();
+    amr_cfg.task_core = 1;
     esp_audio_codec_lib_add(player, AUDIO_CODEC_TYPE_DECODER, aac_decoder_init(&aac_cfg));
     esp_audio_codec_lib_add(player, AUDIO_CODEC_TYPE_DECODER, wav_decoder_init(&wav_dec_cfg));
     esp_audio_codec_lib_add(player, AUDIO_CODEC_TYPE_DECODER, mp3_decoder_init(&mp3_dec_cfg));
+	esp_audio_codec_lib_add(player, AUDIO_CODEC_TYPE_DECODER, amr_decoder_init(&amr_cfg));
 
     audio_element_handle_t m4a_dec_cfg = aac_decoder_init(&aac_cfg);
     audio_element_set_tag(m4a_dec_cfg, "m4a");
@@ -253,13 +257,16 @@ void duer_dcs_get_speaker_state(int *volume, duer_bool *is_mute)
     }
 }
 
-void duer_dcs_speak_handler(const char *url)
+int duer_dcs_speak_handler(const char *url)
 {
+	int ret;
     ESP_LOGI(TAG, "Playing speak: %s", url);
-    esp_audio_play(player, AUDIO_CODEC_TYPE_DECODER, url, 0);
+    ret = esp_audio_play(player, AUDIO_CODEC_TYPE_DECODER, url, 0);
     xSemaphoreTake(s_mutex, portMAX_DELAY);
     duer_playing_type = DUER_AUDIO_TYPE_SPEECH;
     xSemaphoreGive(s_mutex);
+
+	return ret;
 }
 
 void duer_dcs_audio_play_handler(const duer_dcs_audio_info_t *audio_info)
@@ -358,3 +365,5 @@ void duer_dcs_audio_active_next()
     }
     ESP_LOGD(TAG, "duer_dcs_audio_active_next");
 }
+
+

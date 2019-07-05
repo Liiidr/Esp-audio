@@ -30,7 +30,7 @@
 #include "tcpip_adapter.h"
 #include "dueros_app.h"
 
-void app_main(void)
+void app_main(void) 
 {
     esp_err_t err = nvs_flash_init();
     if (err == ESP_ERR_NVS_NO_FREE_PAGES) {
