@@ -74,7 +74,8 @@ spiram_psram.o: \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/soc/esp32/include/soc/periph_defs.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/soc/esp32/include/soc/spi_pins.h \
  D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/soc/esp32/include/soc/spi_struct.h \
- D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/driver/include/driver/periph_ctrl.h
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/driver/include/driver/periph_ctrl.h \
+ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/soc/esp32/include/soc/rtc.h
 
 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/include/sdkconfig.h:
 
@@ -225,4 +226,6 @@ D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/soc/esp32/include/s
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/soc/esp32/include/soc/spi_struct.h:
 
 D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/driver/include/driver/periph_ctrl.h:
+
+D:/GitHub/msys32/home/zz/esp/esp-adf-mini/esp-idf/components/soc/esp32/include/soc/rtc.h:
 /home/zz/esp/esp-adf-mini/esp-idf/components/esp32/./spiram_psram.c:

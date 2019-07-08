@@ -186,24 +186,24 @@ Discarded input sections
  .xt.lit        0x00000000       0x18 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/bootloader_support\libbootloader_support.a(bootloader_sha.o)
  .xt.prop       0x00000000      0x21c D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/bootloader_support\libbootloader_support.a(bootloader_sha.o)
  .literal.esp_log_buffer_hex_internal
-                0x00000000       0x40 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
+                0x00000000       0x48 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
  .literal.esp_log_buffer_char_internal
-                0x00000000       0x40 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
+                0x00000000       0x48 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
  .literal.esp_log_buffer_hexdump_internal
-                0x00000000       0x7c D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
+                0x00000000       0x84 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
  .text          0x00000000        0x0 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
  .data          0x00000000        0x0 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
  .bss           0x00000000        0x0 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
  .rodata.str1.1
                 0x00000000       0x95 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
  .text.esp_log_buffer_hex_internal
-                0x00000000       0xe7 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
+                0x00000000       0xf7 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
  .text.esp_log_buffer_char_internal
-                0x00000000       0xdc D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
+                0x00000000       0xe7 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
  .text.esp_log_buffer_hexdump_internal
-                0x00000000      0x180 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
+                0x00000000      0x190 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
  .xt.lit        0x00000000       0x20 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
- .xt.prop       0x00000000      0x2dc D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
+ .xt.prop       0x00000000      0x300 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
  .literal.esp_rom_spiflash_enable_write$constprop$6
                 0x00000000       0x14 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/spi_flash\libspi_flash.a(spi_flash_rom_patch.o)
  .literal.esp_rom_spiflash_program_page_internal$constprop$4
@@ -2950,7 +2950,7 @@ OUTPUT(D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/bootloader
  .debug_abbrev  0x00002b58       0x60 d:/github/msys32/opt/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/5.2.0\libgcc.a(_bswapsi2.o)
  .debug_abbrev  0x00002bb8      0x15f d:/github/msys32/opt/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/5.2.0\libgcc.a(_udivdi3.o)
 
-.debug_loc      0x00000000     0x533d
+.debug_loc      0x00000000     0x53aa
  .debug_loc     0x00000000       0xc7 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/main\libmain.a(bootloader_start.o)
  .debug_loc     0x000000c7      0x6a2 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/bootloader_support\libbootloader_support.a(bootloader_utility.o)
  .debug_loc     0x00000769      0x5d9 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/bootloader_support\libbootloader_support.a(bootloader_init.o)
@@ -2962,16 +2962,16 @@ OUTPUT(D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/bootloader
  .debug_loc     0x000020d3       0x5e D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/bootloader_support\libbootloader_support.a(bootloader_clock.o)
  .debug_loc     0x00002131      0x37b D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/bootloader_support\libbootloader_support.a(bootloader_common.o)
  .debug_loc     0x000024ac      0x3be D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/bootloader_support\libbootloader_support.a(bootloader_sha.o)
- .debug_loc     0x0000286a      0x247 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
- .debug_loc     0x00002ab1      0x785 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/spi_flash\libspi_flash.a(spi_flash_rom_patch.o)
- .debug_loc     0x00003236      0xae9 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/soc\libsoc.a(rtc_clk.o)
- .debug_loc     0x00003d1f      0x2ce D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/soc\libsoc.a(rtc_time.o)
- .debug_loc     0x00003fed      0x244 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/soc\libsoc.a(rtc_clk_init.o)
- .debug_loc     0x00004231      0x419 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/soc\libsoc.a(rtc_init.o)
- .debug_loc     0x0000464a      0x2b6 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/soc\libsoc.a(rtc_wdt.o)
- .debug_loc     0x00004900       0x34 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/soc\libsoc.a(cpu_util.o)
- .debug_loc     0x00004934       0x21 d:/github/msys32/opt/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/5.2.0\libgcc.a(_bswapsi2.o)
- .debug_loc     0x00004955      0x9e8 d:/github/msys32/opt/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/5.2.0\libgcc.a(_udivdi3.o)
+ .debug_loc     0x0000286a      0x2b4 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/log\liblog.a(log.o)
+ .debug_loc     0x00002b1e      0x785 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/spi_flash\libspi_flash.a(spi_flash_rom_patch.o)
+ .debug_loc     0x000032a3      0xae9 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/soc\libsoc.a(rtc_clk.o)
+ .debug_loc     0x00003d8c      0x2ce D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/soc\libsoc.a(rtc_time.o)
+ .debug_loc     0x0000405a      0x244 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/soc\libsoc.a(rtc_clk_init.o)
+ .debug_loc     0x0000429e      0x419 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/soc\libsoc.a(rtc_init.o)
+ .debug_loc     0x000046b7      0x2b6 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/soc\libsoc.a(rtc_wdt.o)
+ .debug_loc     0x0000496d       0x34 D:/GitHub/msys32/home/zz/esp/Esp-audio/dueros/build/bootloader/soc\libsoc.a(cpu_util.o)
+ .debug_loc     0x000049a1       0x21 d:/github/msys32/opt/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/5.2.0\libgcc.a(_bswapsi2.o)
+ .debug_loc     0x000049c2      0x9e8 d:/github/msys32/opt/xtensa-esp32-elf/bin/../lib/gcc/xtensa-esp32-elf/5.2.0\libgcc.a(_udivdi3.o)
 
 .debug_aranges  0x00000000      0x648
  .debug_aranges

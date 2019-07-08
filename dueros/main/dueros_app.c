@@ -80,9 +80,15 @@ static char flag_test = 0;
 static QueueHandle_t Queue_vad_play = NULL;
 #define QUEUE_VAD_PLAY_LEN	2
 #define QUEUE_VAD_PLAY_SIZE	1
-#define QUEUE_VAD 1
-#define QUEUE_PLAY 2
+//#define QUEUE_VAD 1
+//#define QUEUE_PLAY 2
 
+typedef enum 
+{
+	QUEUE_VAD_START,
+	QUEUE_VAD_STOP,
+	QUEUE_PLAY,
+}rec_ecb_event_type_t;
 
 //static audio_element_handle_t i2s_stream_writer,fatfs_stream_reader,http_stream_reader,resample_for_play;
 //static audio_element_handle_t fatfs_vad_writer,fatfs_vad_reader;
@@ -97,32 +103,30 @@ static QueueHandle_t Queue_vad_play = NULL;
 //#define AMR_STREAM_URI "file://spiffs/test1.raw"
 
 static int esp32_playback_voice(const char *url);
+int esp32_record_voicefile(unsigned char* filename);
 
 
 void rec_engine_cb(rec_event_type_t type, void *user_data)
 {
 	BaseType_t xReturn = pdFAIL;
-	uint32_t senddata1 = QUEUE_VAD; 
+	uint32_t senddata1; 
     if (REC_EVENT_WAKEUP_START == type) {
         ESP_LOGI(TAG, "rec_engine_cb - REC_EVENT_WAKEUP_START");
 
-		static char buf[1024];
-		vTaskGetRunTimeStats(buf);
-		printf("Run Time Stats:\nTask Name	  Time	  Percent\n%s\n", buf);
 
-		vTaskList(buf);
-		printf("Task List:\nTask Name	 Status   Prio	  HWM	 Task Number\n%s\n", buf);
 
 
     } else if (REC_EVENT_VAD_START == type) {
         ESP_LOGI(TAG, "rec_engine_cb - REC_EVENT_VAD_START");
-
+		senddata1 = QUEUE_VAD_START;
 		xReturn = xQueueSend(Queue_vad_play, &senddata1, 0);
 		if(pdPASS == xReturn)printf("QUEUE_VAD sended successful\r\n");
 
 
     } else if (REC_EVENT_VAD_STOP == type) {
         ESP_LOGI(TAG, "rec_engine_cb - REC_EVENT_VAD_STOP");
+		senddata1 = QUEUE_VAD_STOP;
+		xReturn = xQueueSend(Queue_vad_play, &senddata1, 0);
 		
     } else if (REC_EVENT_WAKEUP_END == type) {
         ESP_LOGI(TAG, "rec_engine_cb - REC_EVENT_WAKEUP_END");
@@ -131,7 +135,7 @@ void rec_engine_cb(rec_event_type_t type, void *user_data)
 
 		
     } else {
-		ESP_LOGI(TAG, "ELSE...");
+		
     }
 }
 
@@ -142,7 +146,7 @@ int esp32_playback_voice(const char *url)
 	BaseType_t xReturn = pdFAIL;
 	uint32_t senddata2 = QUEUE_PLAY; 
 	ret = duer_dcs_speak_handler(url);
-	printf("ret =  %d\r\n",ret);
+	printf("ret =  0x%x\r\n",ret);
 	if(ret == ESP_ERR_AUDIO_NO_ERROR){
 		xReturn = xQueueSend(Queue_vad_play, &senddata2, 0);
 		if(pdPASS == xReturn)printf("QUEUE_PLAY sended successful\r\n");
@@ -194,7 +198,7 @@ static void vad_task(void * pram)
 	while(1){
 		xReturn = xQueueReceive(Queue_vad_play, &r_queue, portMAX_DELAY);
 		switch(r_queue){
-			case QUEUE_VAD:
+			case QUEUE_VAD_START:
 				printf("QUEUE_VAD\r\n");
 				//file = fopen("/sdcard/test1.raw", "w+");	
 				file = fopen("/spiffs/test.raw", "w+");
@@ -205,16 +209,19 @@ static void vad_task(void * pram)
 					int ret = rec_engine_data_read(voiceData, REC_ONE_BLOCK_SIZE, 110 / portTICK_PERIOD_MS);
 					ESP_LOGE(TAG, "index = %d", ret);
 					if ((ret == 0) || (ret == -1)) {
-						fclose(file);
-						printf("fclose\r\n");
-						
-						
+					
 						break;
 					}
 					if (file) {
 						fwrite(voiceData, 1, REC_ONE_BLOCK_SIZE, file);
 					}	
 				}		
+				break;	
+			case QUEUE_VAD_STOP:
+				printf("QUEUE_VAD_STOP\r\n");
+				fclose(file);
+				printf("fclose\r\n");			
+			
 				break;	
 			case QUEUE_PLAY:
 				
